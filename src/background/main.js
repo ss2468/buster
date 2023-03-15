@@ -388,6 +388,34 @@ async function getIbmSpeechApiResult(apiUrl, apiKey, audioContent, model) {
   }
 }
 
+async function getCustomHTTPApiResult(
+  customHTTPApiUrl,
+  language,
+  customHTTPApiKey,
+  audioContent
+) {
+  const rsp = await fetch(
+    customHTTPApiUrl,
+    {
+      referrer: '',
+      mode: 'cors',
+      method: 'POST',
+      headers: {
+        'Content-type': 'audio/wav; codec=audio/pcm; samplerate=16000',
+        'Lang': language,
+        'ApiKey': customHTTPApiKey
+      },
+      body: new Blob([audioContent], {type: 'audio/wav'})
+    }
+  );
+
+  if (rsp.status !== 200) {
+    throw new Error(`API response: ${rsp.status}, ${await rsp.text()}`);
+  }
+
+  return await rsp.text()
+}
+
 async function getMicrosoftSpeechApiResult(
   apiLocation,
   apiKey,
@@ -542,6 +570,28 @@ async function transcribeAudio(audioUrl, lang) {
         'en-US'
       );
     }
+  } else if (speechService === 'customHTTPApi') {
+    const {
+      customHTTPApiUrl: customHTTPApiUrl,
+      customHTTPApiKey: customHTTPApiKey,
+    } = await storage.get(
+      ['customHTTPApiUrl', 'customHTTPApiKey']
+    );
+    if (!customHTTPApiUrl) {
+      showNotification({messageId: 'error_missingApiUrl'});
+      return;
+    }
+    if (!customHTTPApiKey) {
+      showNotification({messageId: 'error_missingApiKey'});
+      return;
+    }
+
+    solution = await getCustomHTTPApiResult(
+      customHTTPApiUrl,
+      lang,
+      customHTTPApiKey,
+      audioContent
+    );
   }
 
   if (!solution) {

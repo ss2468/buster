@@ -44,6 +44,11 @@
     "description": "Value of the option."
   },
 
+  "optionValue_speechService_CustomHTTPApi": {
+    "message": "CustomHTTPApi",
+    "description": "Value of the option."
+  },
+
   "optionTitle_microsoftSpeechApiLoc": {
     "message": "API location",
     "description": "Title of the option."
@@ -475,6 +480,11 @@
     "description": "Text of the link."
   },
 
+  "linkText_customHTTPApiGuide": {
+    "message": "There is no guide yet. You have to set up a custom HTTP api yourself.",
+    "description": "Text of the link."
+  },
+
   "pageContent_optionClientAppDownloadDesc": {
     "message": "Download and install the client app to get started. $INSTALLGUIDE$",
     "description": "Page content.",
@@ -573,6 +583,11 @@
 
   "error_missingApiKey": {
     "message": "API key missing. Visit the extension's options to configure the service.",
+    "description": "Error message."
+  },
+
+  "error_missingServerIP": {
+    "message": "Server IP missing. Visit the extension's options to configure the service.",
     "description": "Error message."
   },
 

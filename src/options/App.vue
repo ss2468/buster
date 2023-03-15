@@ -137,6 +137,35 @@
         >
           {{ getText('linkText_apiGuide') }}
         </a>
+
+        <div
+          class="option text-field"
+          v-if="options.speechService === 'customHTTPApi'"
+        >
+          <vn-text-field
+            v-model.trim="options.customHTTPApiUrl"
+            :label="getText('inputLabel_apiUrl')"
+          >
+          </vn-text-field>
+        </div>
+        <div>
+          <vn-text-field
+            :label="getText('inputLabel_apiKey')"
+            v-model.trim="options.customHTTPApiKey"
+          >
+          </vn-text-field>
+        </div>
+
+        <a
+          class="service-guide"
+          v-if="options.speechService === 'customHTTPApi'"
+          target="_blank"
+          rel="noreferrer"
+          href="https://github.com/dessant/buster/wiki/TODO"
+        >
+          {{ getText('linkText_customHTTPApiGuide') }}
+        </a>
+
       </div>
     </div>
 
@@ -295,7 +324,8 @@ export default {
               'googleSpeechApi',
               'witSpeechApi',
               'ibmSpeechApi',
-              'microsoftSpeechApi'
+              'microsoftSpeechApi',
+              'customHTTPApi'
             ]
           },
           {scope: 'optionValue_speechService'}
@@ -337,6 +367,8 @@ export default {
         ibmSpeechApiKey: '',
         microsoftSpeechApiLoc: '',
         microsoftSpeechApiKey: '',
+        customHTTPApiUrl: '',
+        customHTTPApiKey: '',
         witSpeechApiKeys: {},
         loadEnglishChallenge: false,
         tryEnglishSpeechModel: false,

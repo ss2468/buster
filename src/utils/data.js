@@ -12,7 +12,9 @@ const optionKeys = [
   'autoUpdateClientApp',
   'navigateWithKeyboard',
   'appTheme',
-  'showContribPage'
+  'showContribPage',
+  'customHTTPApiUrl',
+  'customHTTPApiKey'
 ];
 
 const clientAppPlatforms = [
