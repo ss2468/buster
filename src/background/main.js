@@ -394,20 +394,36 @@ async function getCustomHTTPApiResult(
   customHTTPApiKey,
   audioContent
 ) {
-  const rsp = await fetch(
-    customHTTPApiUrl,
-    {
-      referrer: '',
-      mode: 'cors',
-      method: 'POST',
-      headers: {
-        'Content-type': 'audio/wav; codec=audio/pcm; samplerate=16000',
-        'Lang': language,
-        'ApiKey': customHTTPApiKey
-      },
-      body: new Blob([audioContent], {type: 'audio/wav'})
-    }
-  );
+  // const rsp = await fetch(
+  //   customHTTPApiUrl,
+  //   {
+  //     referrer: '',
+  //     mode: 'cors',
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-type': 'audio/wav; codec=audio/pcm; samplerate=16000',
+  //       'Lang': language,
+  //       'ApiKey': customHTTPApiKey
+  //     },
+  //     body: new Blob([audioContent], {type: 'audio/wav'})
+  //   }
+  // );
+
+  /* fixme customHTTPApi的核心方法 */
+  const form = new FormData();
+  form.append("file", new Blob([audioContent], {
+    type: 'audio/wav'
+  }));
+  form.append("model", "whisper-1");
+  const rsp = await fetch(customHTTPApiUrl, {
+    referrer: '',
+    mode: 'cors',
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${customHTTPApiKey}`
+    },
+    body: form
+  });
 
   if (rsp.status !== 200) {
     throw new Error(`API response: ${rsp.status}, ${await rsp.text()}`);

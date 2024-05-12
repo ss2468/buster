@@ -13,3 +13,13 @@ node_modules/
 
 /report.json
 /report.html
+
+# 文件夹
+/.idea/
+
+# 项目
+/demo/
+
+# 文件
+package-lock.json
+pnpm-lock.yaml
